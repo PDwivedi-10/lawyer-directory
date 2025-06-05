@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Query</title>
+</head>
+<body>
+<h1>Send Your Query</h1>
+<form action="/send-query" method="post">
+    <input type="hidden" name="lawyerId" th:value="${lawyerId}">
+    <label for="userName">Your Name:</label>
+    <input type="text" id="userName" name="userName" required>
+    <br>
+    <label for="message">Your Query:</label>
+    <textarea id="message" name="message" required></textarea>
+    <br>
+    <button type="submit">Submit Query</button>
+</form>
+<p th:text="${message}"></p>
+</body>
+</html>

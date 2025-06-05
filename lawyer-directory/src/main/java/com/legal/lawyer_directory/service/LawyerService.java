@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class LawyerService {
+public abstract class LawyerService {
 
     @Autowired
     private LawyerRepository lawyerRepository;
@@ -22,7 +22,10 @@ public class LawyerService {
         return lawyerRepository.findAll();
     }
 
+    public abstract List<Lawyer> getLawyersBySpecialization(String specialization);
+
     public void sendQuery(Query query) {
         queryRepository.save(query);
     }
+    
 }

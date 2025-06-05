@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-
 const QueryForm = ({ lawyerId }) => {
+  const [userName, setUserName] = useState('');
   const [userMessage, setUserMessage] = useState('');
+  const [responseMsg, setResponseMsg] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -10,9 +9,9 @@ const QueryForm = ({ lawyerId }) => {
       const response = await axios.post('/api/queries/create', {
         lawyerId,
         userMessage,
-        status: 'PENDING',
+        userName,
       });
-      console.log('Query submitted:', response.data);
+      setResponseMsg(response.data);
     } catch (error) {
       console.error('Error submitting query:', error);
     }
@@ -20,15 +19,22 @@ const QueryForm = ({ lawyerId }) => {
 
   return (
     <div>
-      <h2>Send a Message to Lawyer</h2>
+      <h2>Send a Message to the Lawyer</h2>
+      <input
+        type="text"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+        placeholder="Your name"
+      />
+      <br />
       <textarea
         value={userMessage}
         onChange={(e) => setUserMessage(e.target.value)}
         placeholder="Your query..."
       ></textarea>
+      <br />
       <button onClick={handleSubmit}>Submit Query</button>
+      {responseMsg && <p>{responseMsg}</p>}
     </div>
   );
 };
-
-export default QueryForm;

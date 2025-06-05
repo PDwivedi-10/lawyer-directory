@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-const LawyerList = ({ specialization }) => {
+const LawyerList = ({ specialization, onSelectLawyer }) => {
   const [lawyers, setLawyers] = useState([]);
 
   useEffect(() => {
@@ -23,13 +20,12 @@ const LawyerList = ({ specialization }) => {
         {lawyers.map((lawyer) => (
           <li key={lawyer.id}>
             <h4>{lawyer.name}</h4>
-            <p>{lawyer.specialization}</p>
-            <p>{lawyer.location}</p>
+            <p>Expertise: {lawyer.expertise}</p>
+            <p>Email: {lawyer.email}</p>
+            <button onClick={() => onSelectLawyer(lawyer)}>Chat / Contact</button>
           </li>
         ))}
       </ul>
     </div>
   );
 };
-
-export default LawyerList;

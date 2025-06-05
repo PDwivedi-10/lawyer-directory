@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import LawyerList from './components/LawyerList';
-import Login from './components/Login';
 import QueryForm from './components/QueryForm';
 
 const App = () => {
@@ -10,8 +9,14 @@ const App = () => {
   return (
     <div>
       <h1>Lawyer Directory</h1>
-      <Login />
-      <LawyerList specialization={specialization} />
+      <select value={specialization} onChange={(e) => setSpecialization(e.target.value)}>
+        <option value="criminal">Criminal</option>
+        <option value="civil">Civil</option>
+        <option value="corporate">Corporate</option>
+      </select>
+
+      <LawyerList specialization={specialization} onSelectLawyer={setSelectedLawyer} />
+
       {selectedLawyer && <QueryForm lawyerId={selectedLawyer.id} />}
     </div>
   );

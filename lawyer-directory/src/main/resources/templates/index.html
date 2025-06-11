@@ -1,29 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lawyer Directory</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lawyer Consultation Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        /* Custom styles */
+        body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f4f7fc;
+          color: #333;
+        }
+        header {
+          background-color: #2c3e50;
+          color: white;
+          border-radius: 10px;
+          padding: 20px;
+        }
+        footer {
+          background-color: #2c3e50;
+          color: white;
+          padding: 10px;
+          text-align: center;
+          border-radius: 10px;
+        }
+        select, button {
+          border-radius: 5px;
+        }
+        .lawyer-card {
+          background-color: #ecf0f1;
+          border: 1px solid #bdc3c7;
+          padding: 15px;
+          border-radius: 8px;
+          margin-bottom: 10px;
+          cursor: pointer;
+          transition: transform 0.3s;
+        }
+        .lawyer-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .lawyer-card img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          margin-right: 15px;
+        }
+        .lawyer-card .info {
+          display: flex;
+          align-items: center;
+        }
+        .lawyer-card .info div {
+          margin-left: 10px;
+        }
+        .btn-submit {
+          background-color: #3498db;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+        .btn-submit:hover {
+          background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
-<h1>Available Lawyers</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Expertise</th>
-        <th>Email</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="lawyer : ${lawyers}">
-        <td th:text="${lawyer.name}"></td>
-        <td th:text="${lawyer.expertise}"></td>
-        <td th:text="${lawyer.email}"></td>
-        <td><a th:href="@{/send-query/{lawyerId}(lawyerId=${lawyer.id})}">Send Query</a></td>
-    </tr>
-    </tbody>
-</table>
+
+<header class="mb-6">
+    <h1 class="text-3xl font-semibold">Lawyer Consultation Portal</h1>
+    <p class="mt-2">Connect with verified lawyers across different specializations</p>
+</header>
+
+<div class="container mx-auto px-4">
+    <div class="mb-6">
+        <label for="specialization" class="block text-lg font-medium">Choose Specialization:</label>
+        <select id="specialization" class="p-2 w-full border border-gray-300 rounded-md">
+            <option value="criminal">Criminal Lawyer</option>
+            <option value="civil">Civil Lawyer</option>
+            <option value="corporate">Corporate Lawyer</option>
+            <option value="family">Family Lawyer</option>
+            <option value="tax">Tax Lawyer</option>
+            <option value="intellectual">IP Lawyer</option>
+        </select>
+    </div>
+
+    <div id="lawyer-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Lawyer cards will be dynamically inserted here -->
+    </div>
+
+    <div id="query-form" class="mt-8 hidden">
+        <h3 class="text-xl font-semibold mb-4">Send a query to <span id="selected-lawyer-name"></span></h3>
+        <form onsubmit="event.preventDefault(); alert('Query sent!');">
+            <textarea class="w-full p-2 border border-gray-300 rounded mb-4" rows="4" placeholder="Enter your query..."></textarea>
+            <button class="btn-submit" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; <span id="year"></span> Lawyer Directory. All rights reserved.</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const specializationSelect = document.getElementById('specialization');
+      const lawyerListDiv = document.getElementById('lawyer-list');
+      const queryFormDiv = document.getElementById('query-form');
+      const selectedLawyerName = document.getElementById('selected-lawyer-name');
+      const yearSpan = document.getElementById('year');
+
+      const lawyers = {
+        criminal: [
+          { id: 1, name: "John Doe", experience: "10 years", image: "https://via.placeholder.com/50" },
+          { id: 2, name: "Jane Smith", experience: "7 years", image: "https://via.placeholder.com/50" }
+        ],
+        civil: [
+          { id: 3, name: "Alice Johnson", experience: "8 years", image: "https://via.placeholder.com/50" }
+        ],
+        corporate: [
+          { id: 4, name: "Bob Brown", experience: "12 years", image: "https://via.placeholder.com/50" }
+        ],
+        family: [
+          { id: 5, name: "Emily Davis", experience: "6 years", image: "https://via.placeholder.com/50" }
+        ],
+        tax: [
+          { id: 6, name: "Chris Wilson", experience: "9 years", image: "https://via.placeholder.com/50" }
+        ],
+        intellectual: [
+          { id: 7, name: "Laura Taylor", experience: "11 years", image: "https://via.placeholder.com/50" }
+        ]
+      };
+
+      function renderLawyerList(specialization) {
+        lawyerListDiv.innerHTML = '';
+        queryFormDiv.classList.add('hidden');
+        const selectedLawyers = lawyers[specialization] || [];
+
+        selectedLawyers.forEach(lawyer => {
+          const card = document.createElement('div');
+          card.className = 'lawyer-card';
+          card.innerHTML = `
+            <div class="info">
+              <img src="${lawyer.image}" alt="${lawyer.name}">
+              <div>
+                <strong>${lawyer.name}</strong>
+                <p class="text-sm text-gray-600">${lawyer.experience}</p>
+              </div>
+            </div>
+          `;
+          card.addEventListener('click', () => {
+            selectedLawyerName.textContent = lawyer.name;
+            queryFormDiv.classList.remove('hidden');
+          });
+          lawyerListDiv.appendChild(card);
+        });
+      }
+
+      specializationSelect.addEventListener('change', (e) => {
+        renderLawyerList(e.target.value);
+      });
+
+      yearSpan.textContent = new Date().getFullYear();
+      renderLawyerList(specializationSelect.value);
+    });
+</script>
+
 </body>
 </html>

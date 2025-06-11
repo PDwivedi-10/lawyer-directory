@@ -5,6 +5,8 @@ import com.legal.lawyer_directory.model.Query;
 import com.legal.lawyer_directory.repository.LawyerRepository;
 import com.legal.lawyer_directory.service.LawyerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,6 @@ public class LawyerController {
 
     @Autowired
     private LawyerService lawyerService;
-
-    @Autowired
-    private LawyerRepository lawyerRepository;
 
     // List all lawyers
     @GetMapping("/")

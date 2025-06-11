@@ -2,6 +2,7 @@ package com.legal.lawyer_directory.controller;
 
 import com.legal.lawyer_directory.model.Lawyer;
 import com.legal.lawyer_directory.model.Query;
+import com.legal.lawyer_directory.repository.LawyerRepository;
 import com.legal.lawyer_directory.service.LawyerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,9 @@ public class LawyerController {
 
     @Autowired
     private LawyerService lawyerService;
+
+    @Autowired
+    private LawyerRepository lawyerRepository;
 
     // List all lawyers
     @GetMapping("/")

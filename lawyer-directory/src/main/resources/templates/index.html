@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Lawyer Consultation Portal</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <style>
@@ -11,13 +11,14 @@
           background-color: #f4f7fc;
           color: #333;
         }
+
         header {
           background-color: #2c3e50;
           color: white;
           border-radius: 10px;
           padding: 20px;
-          position: relative;
         }
+
         footer {
           background-color: #2c3e50;
           color: white;
@@ -25,9 +26,11 @@
           text-align: center;
           border-radius: 10px;
         }
+
         select, button {
           border-radius: 5px;
         }
+
         .lawyer-card {
           background-color: #ecf0f1;
           border: 1px solid #bdc3c7;
@@ -36,20 +39,24 @@
           margin-bottom: 10px;
           transition: transform 0.3s;
         }
+
         .lawyer-card:hover {
           transform: translateY(-5px);
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .lawyer-card img {
           width: 50px;
           height: 50px;
           border-radius: 50%;
           margin-right: 15px;
         }
+
         .lawyer-card .info {
           display: flex;
           align-items: center;
         }
+
         .btn-submit {
           background-color: #3498db;
           color: white;
@@ -58,30 +65,44 @@
           cursor: pointer;
           transition: background-color 0.3s;
         }
+
         .btn-submit:hover {
           background-color: #2980b9;
         }
+
         #contact-modal {
           z-index: 999;
         }
     </style>
 </head>
-<body>
 
-<header class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center">
-    <div>
-        <h1 class="text-3xl font-semibold">Lawyer Consultation Portal</h1>
-        <p class="mt-2 text-gray-300">Connect with verified lawyers across different specializations</p>
-        <ul class="text-sm text-gray-300 mt-2 space-y-1">
+<body class="flex flex-col min-h-screen">
+
+<!-- Header -->
+<header class="mb-6">
+    <div class="container mx-auto flex items-center justify-between">
+        <!-- Left: Quotes -->
+        <ul class="text-sm text-gray-300 space-y-1 max-w-xs">
             <li>⚖️ Justice delayed is justice denied.</li>
             <li>📜 Injustice anywhere is a threat to justice everywhere.</li>
             <li>👨‍⚖️ Equal rights under the law.</li>
         </ul>
+
+        <!-- Center: Title and subtitle -->
+        <div class="text-center">
+            <h1 class="text-3xl font-semibold">Lawyer Consultation Portal</h1>
+            <p class="mt-2 text-gray-300">Connect with verified lawyers across different specializations</p>
+        </div>
+
+        <!-- Right: Monogram -->
+        <div>
+            <img src="images/monogram.jpg" alt="Monogram" class="w-20 h-20 rounded" />
+        </div>
     </div>
-    <img src="images/monogram.jpg" alt="Monogram" class="w-20 h-20 mt-4 md:mt-0">
 </header>
 
-<div class="container mx-auto px-4">
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-4">
     <div class="mb-6">
         <label for="specialization" class="block text-lg font-medium">Choose Specialization:</label>
         <select id="specialization" class="p-2 w-full border border-gray-300 rounded-md">
@@ -105,7 +126,7 @@
             <button class="btn-submit" type="submit">Submit</button>
         </form>
     </div>
-</div>
+</main>
 
 <!-- Contact Modal -->
 <div id="contact-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
@@ -116,10 +137,12 @@
     </div>
 </div>
 
+<!-- Footer -->
 <footer>
     <p>&copy; <span id="year"></span> Lawyer Directory. All rights reserved.</p>
 </footer>
 
+<!-- JavaScript -->
 <script>
     function showModal(name, contactDetails) {
       document.getElementById('modal-lawyer-name').textContent = `Contact ${name}`;

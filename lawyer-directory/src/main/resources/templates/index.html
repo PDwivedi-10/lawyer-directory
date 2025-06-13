@@ -78,7 +78,7 @@
             <li>👨‍⚖️ Equal rights under the law.</li>
         </ul>
     </div>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Justice_scale_icon.svg/100px-Justice_scale_icon.svg.png" alt="Lawyer Monogram" class="w-20 h-20 mt-4 md:mt-0">
+    <img src="images/monogram.jpg" alt="Monogram" class="w-20 h-20 mt-4 md:mt-0">
 </header>
 
 <div class="container mx-auto px-4">
@@ -121,6 +121,16 @@
 </footer>
 
 <script>
+    function showModal(name, contactDetails) {
+      document.getElementById('modal-lawyer-name').textContent = `Contact ${name}`;
+      document.getElementById('modal-contact-details').textContent = contactDetails;
+      document.getElementById('contact-modal').classList.remove('hidden');
+    }
+
+    function hideModal() {
+      document.getElementById('contact-modal').classList.add('hidden');
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const specializationSelect = document.getElementById('specialization');
       const lawyerListDiv = document.getElementById('lawyer-list');
@@ -185,16 +195,6 @@
         });
       }
 
-      function showModal(name, contactDetails) {
-        document.getElementById('modal-lawyer-name').textContent = `Contact ${name}`;
-        document.getElementById('modal-contact-details').textContent = contactDetails;
-        document.getElementById('contact-modal').classList.remove('hidden');
-      }
-
-      function hideModal() {
-        document.getElementById('contact-modal').classList.add('hidden');
-      }
-
       specializationSelect.addEventListener('change', (e) => {
         renderLawyerList(e.target.value);
       });
@@ -206,4 +206,3 @@
 
 </body>
 </html>
-

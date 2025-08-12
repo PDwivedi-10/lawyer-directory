@@ -50,4 +50,3 @@ public class Lawyer {
         this.email = email;
     }
 }
-

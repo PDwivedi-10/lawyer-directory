@@ -50,4 +50,3 @@ public class LawyerController {
         return "send-query";
     }
 }
-
